@@ -12,6 +12,11 @@ import util.Situacao;
 public class Menu {
 	static Scanner entrada = new Scanner(System.in);
 	static List<Evento> eventos = new ArrayList<>();
+	static final String situacoesDeEvento = """
+			\n----SITUAÇÕES DE EVENTO----
+			1 – Andamento
+			2 – Cancelado
+			3 – Encerrado""";
 	
 	public static void main(String[] args) {
 		int opcaoEscolhida;
@@ -36,12 +41,17 @@ public class Menu {
 					cadastrarEvento();
 					break;
 				case 2:
-					System.out.print("Digite o nome procurado: ");
+					System.out.print("Digite o nome do evento a ser buscado: ");
 					pesquisarEventoPeloNome(entrada.nextLine());
 					break;
 				case 3:
+					System.out.print("Digite o nome da instituição/local do evento a ser buscado: ");
+					pesquisarEventoPelaInstituicao(entrada.nextLine());
 					break;
 				case 4:
+					System.out.println(situacoesDeEvento);
+					System.out.print("Digite a situação (número) de evento a ser buscada: ");
+					pesquisarEventoPelaSituacao(entrada.nextInt());
 					break;
 				case 5:
 					System.out.println("\n----FIM----");
@@ -50,10 +60,6 @@ public class Menu {
 					System.out.println("Opção inválida");
 			}
 		} while (opcaoEscolhida != 5);
-		
-		/*
-		 * for (Evento evento : eventos) { System.out.println(evento.toString()); }
-		 */
 		
 		entrada.close();
 	}
@@ -68,12 +74,7 @@ public class Menu {
 		String data = entrada.next();
 		List<Participante> participantes = new ArrayList<>();
 		
-		String enumSituacoesDeEvento = """
-				\n----SITUAÇÕES DE EVENTO----
-				1 – Andamento
-				2 – Cancelado
-				3 – Encerrado""";
-		System.out.println(enumSituacoesDeEvento);
+		System.out.println(situacoesDeEvento);
 		System.out.print("Qual a situação do evento (insira o número): ");
 		entrada.nextLine();
 		int numeroDaSituacao = entrada.nextInt();
@@ -112,6 +113,26 @@ public class Menu {
 			return;
 		}
 		System.out.printf("Não foi encontrado nenhum evento com o nome \"%s\"");
+	}
+	
+	public static void pesquisarEventoPelaInstituicao(String instituicaoProcurada) {
+		for (Evento evento : eventos) {
+			if(evento.getLocal().getInstituicao().equalsIgnoreCase(instituicaoProcurada)) System.out.println(evento.toString());
+			return;
+		}
+		System.out.printf("Não foi encontrado nenhuma instituição com o nome \"%s\"");
+	}
+	
+	public static void pesquisarEventoPelaSituacao(int situacaoProcurada) {
+		boolean achouAlgumEvento = false;
+		for(Evento evento : eventos) {
+			if(evento.getSituacao().getValor() == situacaoProcurada) {
+				System.out.println(evento.toString());
+				achouAlgumEvento = true;
+			}
+		}
+		if(!achouAlgumEvento) System.out.println("Não foi localizado nenhum evento nessa situação");
+		
 	}
 	
 }
