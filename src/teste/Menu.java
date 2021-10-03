@@ -22,43 +22,45 @@ public class Menu {
 				2 – Pesquisar evento usando o nome
 				3 – Pesquisar evento usando a instituição
 				4 – Pesquisar evento usando a situacao
-				5 – Sair
-				""";
+				5 – Sair""";
 		System.out.println(menuDeOpcoes);
 		
 		do {
 			
-			System.out.print("Selecione uma opção do menu: ");
+			System.out.print("\nSelecione uma opção do menu de opções: ");
 			opcaoEscolhida = entrada.nextInt();
+			entrada.nextLine();
 			
 			switch (opcaoEscolhida) {
 				case 1:
 					cadastrarEvento();
 					break;
 				case 2:
-//					pesquisarEventoPeloNome();
+					System.out.print("Digite o nome procurado: ");
+					pesquisarEventoPeloNome(entrada.nextLine());
 					break;
 				case 3:
 					break;
 				case 4:
 					break;
 				case 5:
+					System.out.println("\n----FIM----");
 					break;
 				default:
 					System.out.println("Opção inválida");
 			}
 		} while (opcaoEscolhida != 5);
 		
-		for (Evento evento : eventos) {
-			System.out.println(evento.toString());
-		}
+		/*
+		 * for (Evento evento : eventos) { System.out.println(evento.toString()); }
+		 */
 		
 		entrada.close();
 	}
 	
 	public static void cadastrarEvento() {
+		System.out.println("\n----CADASTRO DE EVENTO----");
 		System.out.print("Insira o nome do evento: ");
-		entrada.nextLine();
 		String nome = entrada.nextLine();
 		System.out.print("Valor da taxa de inscrição: ");
 		double taxaInscricao = entrada.nextDouble();
@@ -67,11 +69,10 @@ public class Menu {
 		List<Participante> participantes = new ArrayList<>();
 		
 		String enumSituacoesDeEvento = """
-				----SITUAÇÕES DE EVENTO----
+				\n----SITUAÇÕES DE EVENTO----
 				1 – Andamento
 				2 – Cancelado
-				3 – Encerrado
-				""";
+				3 – Encerrado""";
 		System.out.println(enumSituacoesDeEvento);
 		System.out.print("Qual a situação do evento (insira o número): ");
 		entrada.nextLine();
@@ -91,7 +92,7 @@ public class Menu {
 		}
 
 		
-		System.out.println("---CADASTRO DO LOCAL DO EVENTO--");
+		System.out.println("\n---CADASTRO DO LOCAL DO EVENTO--");
 		System.out.print("Nome da instituição onde será realizado o evento: ");
 		entrada.nextLine();
 		String instituicao = entrada.nextLine();
@@ -105,23 +106,13 @@ public class Menu {
 		eventos.add(eventoCriado);
 	}
 	
-	/*
-	 * public static void pesquisarEventoPeloNome() { String nomeProcurado =
-	 * entrada.nextLine(); boolean nomeDeEventoEncontrado = false;
-	 * 
-	 * for (Evento evento : eventos){ if(evento.getNome().equals(nomeProcurado)) {
-	 * System.out.println(evento.toString()); nomeDeEventoEncontrado = true; } }
-	 * if(!nomeDeEventoEncontrado) System.out.printf("Evento %s não encontrado",
-	 * nomeProcurado); }
-	 * 
-	 * public static void pesquisarEventoPeloNome() { String nomeProcurado =
-	 * entrada.nextLine(); boolean nomeDeEventoEncontrado = false;
-	 * 
-	 * for (Evento evento : eventos){ if(evento.getNome().equals(nomeProcurado)) {
-	 * System.out.println(evento.toString()); nomeDeEventoEncontrado = true; } }
-	 * if(!nomeDeEventoEncontrado) System.out.printf("Evento %s não encontrado",
-	 * nomeProcurado); }
-	 */
+	public static void pesquisarEventoPeloNome(String nomeProcurado) {
+		for (Evento evento : eventos) {
+			if(nomeProcurado.equalsIgnoreCase(evento.getNome())) System.out.println(evento.toString());
+			return;
+		}
+		System.out.printf("Não foi encontrado nenhum evento com o nome \"%s\"");
+	}
 	
 }
 
