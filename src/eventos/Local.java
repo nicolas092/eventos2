@@ -42,7 +42,10 @@ public class Local {
 
 	@Override
 	public String toString() {
-		return "Local [instituicao=" + instituicao + ", telefone=" + telefone + ", organizador=" + organizador + "]";
+		return "Local [" +
+				"\ninstituicao=" + instituicao +
+				"\ntelefone=" + telefone +
+				"\norganizador=" + organizador + "]";
 	}
 	
 }

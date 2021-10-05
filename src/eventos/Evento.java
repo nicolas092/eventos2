@@ -9,22 +9,29 @@ public class Evento implements Validador {
 	private String nome;
 	private double taxaInscricao;
 	private String data;
-	private List<Participante> participantes;
 	private Situacao situacao;
+	private List<Participante> participantes;
 	private Local local;
 	
 	public Evento() {
 		super();
 	}
 
-	public Evento(String nome, double taxaInscricao, String data, List<Participante> participantes, Situacao situacao, Local local) {
+	public Evento(String nome, double taxaInscricao, String data, Situacao situacao, List<Participante> participantes, Local local) {
 		super();
 		this.nome = nome;
 		this.taxaInscricao = taxaInscricao;
 		this.data = data;
-		this.participantes = participantes;
 		this.situacao = situacao;
+		this.participantes = participantes;
 		this.local = local;
+	}
+	
+	@Override
+	public boolean validarData() {	// datas validas: somente ano de 2021
+		int ano = Integer.parseInt(this.data.split("/")[2]);
+		if (ano == 2021 || ano == 21) return true;
+		return false;
 	}
 
 	public String getNome() {
@@ -77,15 +84,30 @@ public class Evento implements Validador {
 
 	@Override
 	public String toString() {
-		return "Evento [nome=" + nome + ", taxaInscricao=" + taxaInscricao + ", data=" + data + ", participantes="
-				+ participantes + ", situacao=" + situacao + ", local=" + local + "]";
-	}
-
-	@Override
-	public boolean validarData() {	// datas validas: somente ano de 2021
-		int ano = Integer.parseInt(this.data.split("/")[2]);
-		if (ano == 2021 || ano == 21) return true;
-		return false;
+		String auxParticipantes = "";
+		if(participantes != null) {
+			for(Participante participante : participantes) {
+				if(participante != null) auxParticipantes += participante.toString() + "\n";
+			}
+		}
+		
+		return "Evento [" +
+				"\nnome=" + nome +
+				"\ntaxaInscricao=" + taxaInscricao +
+				"\ndata=" + data +
+				"\nparticipantes=" + auxParticipantes +
+				"\nsituacao=" + situacao +
+//				"\nsituacao=" + situacao.getDescricao() +
+				"\nlocal=" + (local != null ? local.toString() : "nao consta") + " ]";
 	}
 
 }
+
+
+
+
+
+
+
+
+
