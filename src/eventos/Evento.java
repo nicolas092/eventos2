@@ -85,20 +85,19 @@ public class Evento implements Validador {
 	@Override
 	public String toString() {
 		String auxParticipantes = "";
-		if(participantes != null) {
+		if(participantes != null) {																// participantes nunca sera nulo
 			for(Participante participante : participantes) {
-				if(participante != null) auxParticipantes += participante.toString() + "\n";
-			}
+				if(participante != null) auxParticipantes += participante.toString() + "\n";	// embora listas possam ter valores nulos,
+			}																					// participante nunca sera nulo
 		}
 		
-		return "Evento [" +
-				"\nnome=" + nome +
-				"\ntaxaInscricao=" + taxaInscricao +
-				"\ndata=" + data +
-				"\nparticipantes=" + auxParticipantes +
-				"\nsituacao=" + situacao +
-//				"\nsituacao=" + situacao.getDescricao() +
-				"\nlocal=" + (local != null ? local.toString() : "nao consta") + " ]";
+		return "\nEVENTO" +
+				"\nnome = " + nome +
+				", taxaInscricao = R$" + taxaInscricao +
+				", data = " + data +
+				", situacao = " + situacao +
+				"\nLocal" + local.toString() +
+				"\nParticipantes\n" + (auxParticipantes.equals("") ? "nenhum participante informado" : auxParticipantes);
 	}
 
 }

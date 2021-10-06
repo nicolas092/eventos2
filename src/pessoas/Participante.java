@@ -53,11 +53,11 @@ public class Participante extends Pessoa {
 
 	@Override
 	public String toString() {
-		return "Participante [" +
-				"\nendereco=" + endereco +
-				"\ntelefone=" + telefone +
-				"\ncpf=" + cpf +
-				"\nemail=" + email + "]";
+		return "nome = " + this.getNome() +
+				", endereco = " + endereco +
+				", telefone = " + telefone +
+				", cpf = " + cpf +
+				", email = " + email;
 	}
 	
 }

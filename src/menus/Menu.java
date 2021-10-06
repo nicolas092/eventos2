@@ -21,19 +21,19 @@ public class Menu {
 					cadastrarEvento();
 					break;
 				case 2:
-					
+					pesquisarEventoPeloNome();
 					break;
 				case 3:
-					
+					pesquisarEventoPelaInstituicao();
 					break;
 				case 4:
-					
+					pesquisarEventoPelaSituacao();
 					break;
 				case 5:
 					System.exit(0);
 					break;
 				default:
-					JOptionPane.showMessageDialog(null, "Opcao invalida");
+					JOptionPane.showMessageDialog(null, "Opção inválida");
 			}
 		}
 		
@@ -66,7 +66,7 @@ public class Menu {
 //		-------------------------------------------------------------------------------------------
 		
 		
-		
+//		CADASTRO DA SITUACAO DO EVENTO-------------------------------------------------------------
 		Situacao situacao = null;
 		while(situacao == null) {
 			switch(montaMenuDeSituacao()) {
@@ -80,10 +80,10 @@ public class Menu {
 				situacao = Situacao.ENCERRADO;
 				break;
 			default:
-				JOptionPane.showMessageDialog(null, "Opcao invalida");
+				JOptionPane.showMessageDialog(null, "Opção inválida");
 			}
 		}
-		
+//		--------------------------------------------------------------------------------------------
 		
 		
 //		CADASTRO DE LOCAL DO EVENTO-------------------------------------------------------------
@@ -102,9 +102,70 @@ public class Menu {
 
 	
 	
+	public static void pesquisarEventoPeloNome() {
+		String nomeProcurado = JOptionPane.showInputDialog("Nome a ser buscado:");
+		String resultadoDaBusca = "";
+		for(Evento evento : eventos) {
+			if(evento.getNome().equalsIgnoreCase(nomeProcurado)) resultadoDaBusca += evento.toString() + "\n";
+		}
+		resultadoDaBusca = resultadoDaBusca.equals("") ? "Não foi localizado nenhum evento com esse nome" : resultadoDaBusca;
+		JOptionPane.showMessageDialog(null, resultadoDaBusca);
+	}
+	
+	
+		
+	public static void pesquisarEventoPelaInstituicao() {
+		String instituicaoProcurada = JOptionPane.showInputDialog("Insituição a ser buscada:");
+		String resultadoDaBusca = "";
+		for(Evento evento : eventos) {
+			if(evento.getLocal().getInstituicao().equalsIgnoreCase(instituicaoProcurada)) resultadoDaBusca += evento.toString() + "\n";
+		}
+		resultadoDaBusca = resultadoDaBusca.equals("") ? "Não foi localizado nenhum evento com esse nome de instituição." : resultadoDaBusca;
+		JOptionPane.showMessageDialog(null, resultadoDaBusca);
+	}
+
+	
+	
+	public static void pesquisarEventoPelaSituacao() {
+		String menuDeSituacoes = "Situação a ser buscada (digite apenas o número):\n";
+		
+		for(Situacao situacao : Situacao.values()) {
+			menuDeSituacoes += situacao.getDescricao() + "\n";
+		}
+		
+		int situacaoProcurada = Integer.parseInt(JOptionPane.showInputDialog(menuDeSituacoes));
+		
+		Situacao situacao = null;
+		while(situacao == null) {
+			switch(situacaoProcurada) {
+				case 1:
+					situacao = Situacao.ANDAMENTO;
+					break;
+				case 2:
+					situacao = Situacao.CANCELADO;
+					break;
+				case 3:
+					situacao = Situacao.ENCERRADO;
+					break;
+				default:
+					JOptionPane.showMessageDialog(null, "Opção inválida");
+			}
+		}
+		
+		String resultadoDaBusca = "";
+		for(Evento evento : eventos) {
+			if(evento.getSituacao() == situacao) {
+				resultadoDaBusca += evento.toString() + "\n";
+			}
+		}
+		resultadoDaBusca = resultadoDaBusca.equals("") ? "Não foi localizado nenhum evento na situação requerida." : resultadoDaBusca;
+		JOptionPane.showMessageDialog(null, resultadoDaBusca);
+	}
+
+	
+	
 	public static int montaMenu() {
-		String menu = "";
-		menu += "Escolha uma das seguintes opcoes:\n";
+		String menu = "Escolha uma das seguintes opções (digite apenas o número):\n";
 		for (OpcoesMenu opcao : OpcoesMenu.values()) {
 			menu += opcao.getDescricao() + "\n";
 		}
@@ -114,8 +175,7 @@ public class Menu {
 	
 	
 	public static int montaMenuDeSituacao() {
-		String menu = "";
-		menu += "Escolha uma das seguintes opcoes:\n";
+		String menu = "Situação do evento (digite apenas o número):\n";
 		for(Situacao situacao : Situacao.values()) {
 			menu += situacao.getDescricao() + "\n";
 		}
