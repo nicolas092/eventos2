@@ -91,12 +91,16 @@ public class Evento implements Validador {
 			}																					// participante nunca sera nulo
 		}
 		
+		String auxLocal = "";
+		if(local != null) auxLocal += local.toString(); 
+		else auxLocal += "local não informado";
+		
 		return "\nEVENTO" +
 				"\nnome = " + nome +
 				", taxaInscricao = R$" + taxaInscricao +
 				", data = " + data +
 				", situacao = " + situacao +
-				"\nLocal" + local.toString() +
+				"\nLocal" + auxLocal +
 				"\nParticipantes\n" + (auxParticipantes.equals("") ? "nenhum participante informado" : auxParticipantes);
 	}
 
