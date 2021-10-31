@@ -57,6 +57,7 @@ public class Menu {
 				}
 			}
 		}
+		if (resultado.equals("")) resultado += "Nenhum evento possui o participante procurado";
 		JOptionPane.showMessageDialog(null, resultado);
 	}
 	
@@ -67,6 +68,7 @@ public class Menu {
 		for (Evento evento : eventos) {
 			resultado += evento;
 		}
+		if (resultado.equals("")) resultado += "Nenhum evento cadastrado";
 		JOptionPane.showMessageDialog(null, resultado);
 	}
 	
