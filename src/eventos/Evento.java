@@ -1,11 +1,16 @@
 package eventos;
 
+import java.io.Serializable;
 import java.util.List;
 import pessoas.Participante;
 import util.Situacao;
 import util.Validador;
 
-public class Evento implements Validador {
+public class Evento implements Validador, Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 5823077336776252082L;
 	private String nome;
 	private double taxaInscricao;
 	private String data;
@@ -95,13 +100,13 @@ public class Evento implements Validador {
 		if(local != null) auxLocal += local.toString(); 
 		else auxLocal += "local não informado";
 		
-		return "\nEVENTO" +
+		return "EVENTO" +
 				"\nnome = " + nome +
 				", taxaInscricao = R$" + taxaInscricao +
 				", data = " + data +
 				", situacao = " + situacao +
 				"\nLocal" + auxLocal +
-				"\nParticipantes\n" + (auxParticipantes.equals("") ? "nenhum participante informado" : auxParticipantes);
+				"\nParticipantes\n" + (auxParticipantes.equals("") ? "nenhum participante informado\n" : auxParticipantes);
 	}
 
 }

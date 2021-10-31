@@ -14,22 +14,25 @@ public class Menu {
 	static List<Evento> eventos = new ArrayList<>();
 	
 	public static void main(String[] args) {
-		
+		PersistenciaDeDados.lerEventos();
 		while(true) {
 			switch (montaMenu()) {
 				case 1:
 					cadastrarEvento();
 					break;
 				case 2:
-					pesquisarEventoPeloNome();
+//					pesquisarEventoPeloNome();
+					listarTodosEventos();
 					break;
 				case 3:
-					pesquisarEventoPelaInstituicao();
+//					pesquisarEventoPelaInstituicao();
+					listarTodosEventosProcurandoPeloNomeDoParticipante();
 					break;
 				case 4:
 					pesquisarEventoPelaSituacao();
 					break;
 				case 5:
+					PersistenciaDeDados.salvarEventos(eventos);
 					System.exit(0);
 					break;
 				default:
@@ -39,6 +42,33 @@ public class Menu {
 		
 	}
 	
+	
+	public static void listarTodosEventosProcurandoPeloNomeDoParticipante() {
+		String resultado = "";
+		String nomeProcurado = JOptionPane.showInputDialog("Insira o nome do participante procurado:");
+		for (Evento evento : eventos) {
+			if(evento != null) {
+				for (Participante participante : evento.getParticipantes()) {
+					if(participante != null && participante.getNome().equalsIgnoreCase(nomeProcurado)) {
+						resultado += evento;
+						break;	// esse break serve pra nao repetir o mesmo evento caso o evento tenha mais de um participante
+								// com o nome procurado
+					}
+				}
+			}
+		}
+		JOptionPane.showMessageDialog(null, resultado);
+	}
+	
+	
+	
+	public static void listarTodosEventos() {
+		String resultado = "";
+		for (Evento evento : eventos) {
+			resultado += evento;
+		}
+		JOptionPane.showMessageDialog(null, resultado);
+	}
 	
 	
 	

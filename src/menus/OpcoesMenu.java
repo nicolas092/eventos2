@@ -2,9 +2,9 @@ package menus;
 
 public enum OpcoesMenu {
 	CADASTRAR_EVENTO(1, "1 - Cadastrar evento"),
-	PESQUISAR_EVENTO_COM_NOME(2, "2 - Pesquisar evento pelo nome"),
-	PESQUISAR_EVENTO_COM_INSTITUICAO(3, "3 - Pesquisar evento pela instituicao"),
-	PESQUISAR_EVENTO_COM_SITUACAO(4, "4 - Pesquisar evento pela situacao"),
+	LISTAR_TODOS_OS_EVENTOS(2, "2 - Listar todos os eventos"),
+	LISTAR_TODOS_OS_EVENTOS_COM_NOME_DE_PARTICIPANTE(3, "3 - Listar todos os eventos que um participante se inscreveu"),
+	REMOVER_EVENTO_PELO_NOME(4, "4 - Remover evento usando o nome"),
 	SAIR(5, "5 - Sair");
 
 	private final int identificador;

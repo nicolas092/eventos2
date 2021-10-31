@@ -1,6 +1,12 @@
 package eventos;
 
-public class Local {
+import java.io.Serializable;
+
+public class Local implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 3671014887864501250L;
 	private String instituicao;
 	private String telefone;
 	private String organizador;

@@ -1,7 +1,13 @@
 package pessoas;
 
-public class Participante extends Pessoa {
+import java.io.Serializable;
 
+public class Participante extends Pessoa implements Serializable{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -2521736816830815866L;
 	private String endereco;
 	private String telefone;
 	private String cpf;
