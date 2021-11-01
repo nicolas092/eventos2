@@ -21,19 +21,27 @@ public class PersistenciaDeDados {
 	public static void salvarEventos(List<Evento> eventos) {
 		File nomeArq = new File("Eventos.bin");
 		try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(nomeArq));) {
-			for(Evento evento : eventos) {
-				out.writeObject(evento);
-			}
-		} catch(NullPointerException e) {
-			System.out.println("Ponteiro nulo");
+			
+			for(Evento evento : eventos) out.writeObject(evento);
+			
+		} catch (SecurityException e) {
+			System.out.println(e.getMessage());
+			System.out.println(e.getCause());
+		} catch (NullPointerException e) {
+			System.out.println(e.getMessage());
+			System.out.println(e.getCause());
 		} catch (InvalidClassException e) {
-			System.out.println("Classe inválida");
+			System.out.println(e.getMessage());
+			System.out.println(e.getCause());
 		} catch (NotSerializableException e) {
-			System.out.println("Classe não serializável");
+			System.out.println(e.getMessage());
+			System.out.println(e.getCause());
 		} catch (FileNotFoundException e) {
-			System.out.println("Arquivo não encontrado");
+			System.out.println(e.getMessage());
+			System.out.println(e.getCause());
 		} catch (IOException e) {
-			System.out.println("Erro na escrita");
+			System.out.println(e.getMessage());
+			System.out.println(e.getCause());
 		} finally {
 			System.out.println("Fim do salvarEventos()");
 		}
@@ -47,29 +55,40 @@ public class PersistenciaDeDados {
 			while(true)	Menu.eventos.add((Evento) in.readObject());
 
 		} catch (ClassCastException e) {
-			System.out.println("ClassCastException no método add()");
+			System.out.println(e.getMessage());
+			System.out.println(e.getCause());
 		} catch (UnsupportedOperationException e) {
-			System.out.println("UnsupportedOperationException no método add()");
+			System.out.println(e.getMessage());
+			System.out.println(e.getCause());
 		} catch (IllegalArgumentException e) {
-			System.out.println("IllegalArgumentException no método add()");
+			System.out.println(e.getMessage());
+			System.out.println(e.getCause());
 		} catch (OptionalDataException e) {
-			System.out.println("Encontrado objetos primitivos dentro da stream, e apenas objetos são suportados");
+			System.out.println(e.getMessage());
+			System.out.println(e.getCause());
 		} catch (InvalidClassException e) {
-			System.out.println("A serialização de alguma classe está incorreta");
+			System.out.println(e.getMessage());
+			System.out.println(e.getCause());
 		} catch (StreamCorruptedException e) {
-			System.out.println("Leitor de stream está incorreto");
+			System.out.println(e.getMessage());
+			System.out.println(e.getCause());
 		} catch (NullPointerException e) {
-			System.out.println("Ponteiro nulo");
+			System.out.println(e.getMessage());
+			System.out.println(e.getCause());
 		} catch (FileNotFoundException e) {
-			System.out.println("Arquivo não encontrado");
+			System.out.println(e.getMessage());
+			System.out.println(e.getCause());
 		} catch (SecurityException e) {
-			System.out.println("Permissão de leitura do arquivo negada");
+			System.out.println(e.getMessage());
+			System.out.println(e.getCause());
 		} catch (EOFException e) {
-			System.out.println("Final da leitura");
+			System.out.println("EOFException -> leitura do arquivo de dados correta");
 		} catch (IOException e) {
-			System.out.println("Erro na leitura");
+			System.out.println(e.getMessage());
+			System.out.println(e.getCause());
 		} catch (ClassNotFoundException e) {
-			System.out.println("Classe não encontrada");
+			System.out.println(e.getMessage());
+			System.out.println(e.getCause());
 		} finally {
 			System.out.println("Fim do lerEventos()");
 		}
