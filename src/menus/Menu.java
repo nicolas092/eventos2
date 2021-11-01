@@ -29,7 +29,8 @@ public class Menu {
 					listarTodosEventosProcurandoPeloNomeDoParticipante();
 					break;
 				case 4:
-					pesquisarEventoPelaSituacao();
+//					pesquisarEventoPelaSituacao();
+					removerEventoPeloNome();
 					break;
 				case 5:
 					PersistenciaDeDados.salvarEventos(eventos);
@@ -41,6 +42,21 @@ public class Menu {
 		}
 		
 	}
+	
+	
+	public static void removerEventoPeloNome() {
+		String nomeDoEvento = JOptionPane.showInputDialog("Insira o nome do evento a ser removido:");
+		String resultado = "Nenhum evento possui o nome fornecido";
+		for(Evento evento : eventos) {
+			if(evento.getNome().equalsIgnoreCase(nomeDoEvento)) {
+				eventos.remove(evento);
+				resultado = "Evento removido";
+				break;
+			}
+		}
+		JOptionPane.showMessageDialog(null, resultado);
+	}
+ 	
 	
 	
 	public static void listarTodosEventosProcurandoPeloNomeDoParticipante() {
