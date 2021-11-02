@@ -12,17 +12,16 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.OptionalDataException;
 import java.io.StreamCorruptedException;
-import java.util.List;
 
 import eventos.Evento;
 
 public class PersistenciaDeDados {
 
-	public static void salvarEventos(List<Evento> eventos) {
+	public static void salvarEventos() {
 		File nomeArq = new File("Eventos.bin");
 		try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(nomeArq));) {
 			
-			for(Evento evento : eventos) out.writeObject(evento);
+			for(Evento evento : Menu2.eventos) out.writeObject(evento);
 			
 		} catch (SecurityException e) {
 			System.out.println(e.getMessage());
@@ -52,7 +51,7 @@ public class PersistenciaDeDados {
 		File nomeArq = new File("Eventos.bin");
 		try (ObjectInputStream in = new ObjectInputStream(new FileInputStream(nomeArq));) {
 			
-			while(true)	Menu.eventos.add((Evento) in.readObject());
+			while(true)	Menu2.eventos.add((Evento) in.readObject());
 
 		} catch (ClassCastException e) {
 			System.out.println(e.getMessage());

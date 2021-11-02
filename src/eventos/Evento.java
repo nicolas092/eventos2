@@ -6,7 +6,7 @@ import pessoas.Participante;
 import util.Situacao;
 import util.Validador;
 
-public class Evento implements Validador, Serializable {
+public class Evento implements Validador, Serializable, Comparable<Evento> {
 	/**
 	 * 
 	 */
@@ -17,7 +17,7 @@ public class Evento implements Validador, Serializable {
 	private Situacao situacao;
 	private List<Participante> participantes;
 	private Local local;
-	
+
 	public Evento() {
 		super();
 	}
@@ -31,7 +31,7 @@ public class Evento implements Validador, Serializable {
 		this.participantes = participantes;
 		this.local = local;
 	}
-	
+
 	@Override
 	public boolean validarData() {	// datas validas: somente ano de 2021
 		int ano = Integer.parseInt(this.data.split("/")[2]);
@@ -95,27 +95,28 @@ public class Evento implements Validador, Serializable {
 				if(participante != null) auxParticipantes += participante.toString() + "\n";	// embora listas possam ter valores nulos,
 			}																					// participante nunca sera nulo
 		}
-		
+
 		String auxLocal = "";
 		if(local != null) auxLocal += local.toString(); 
 		else auxLocal += "local não informado";
-		
+
 		return "EVENTO" +
-				"\nnome = " + nome +
-				", taxaInscricao = R$" + taxaInscricao +
-				", data = " + data +
-				", situacao = " + situacao +
-				"\nLocal" + auxLocal +
-				"\nParticipantes\n" + (auxParticipantes.equals("") ? "nenhum participante informado\n" : auxParticipantes);
+		"\nnome = " + nome +
+		", taxaInscricao = R$" + taxaInscricao +
+		", data = " + data +
+		", situacao = " + situacao +
+		"\nLocal" + auxLocal +
+		"\nParticipantes\n" + (auxParticipantes.equals("") ? "nenhum participante informado\n" : auxParticipantes);
 	}
 
+
+
+	@Override
+	public int compareTo(Evento o) {
+		return nome.compareToIgnoreCase(o.getNome());
+	}
+
+
+
 }
-
-
-
-
-
-
-
-
 
