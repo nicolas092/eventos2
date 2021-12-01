@@ -1,19 +1,25 @@
 package eventos;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.List;
+
 import pessoas.Participante;
 import util.Situacao;
-import util.Validador;
 
-public class Evento implements Validador, Serializable, Comparable<Evento> {
+public class Evento implements Serializable, Comparable<Evento> {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 5823077336776252082L;
 	private String nome;
 	private double taxaInscricao;
-	private String data;
+//	escolhi LocalDateTime pois o mais comum é que um evento tenha, além de dia específico,
+//	um horário definido para iniciar. Além disso, optei por usar o pacote java.time por ser uma solução mais recente
+	private LocalDateTime data;
+//	escolhi EnumType.ORDINAL porque entendo que mudar os valores da Enum ("ENCERRADO" para "FINALIZADO" por exemplo)
+//	pode ser interessante, mas não vejo porque mudar a ordem das constantes
+//	@Enumerated(EnumType.ORDINAL)
 	private Situacao situacao;
 	private List<Participante> participantes;
 	private Local local;
@@ -22,7 +28,7 @@ public class Evento implements Validador, Serializable, Comparable<Evento> {
 		super();
 	}
 
-	public Evento(String nome, double taxaInscricao, String data, Situacao situacao, List<Participante> participantes, Local local) {
+	public Evento(String nome, double taxaInscricao, LocalDateTime data, Situacao situacao, List<Participante> participantes, Local local) {
 		super();
 		this.nome = nome;
 		this.taxaInscricao = taxaInscricao;
@@ -31,13 +37,12 @@ public class Evento implements Validador, Serializable, Comparable<Evento> {
 		this.participantes = participantes;
 		this.local = local;
 	}
-
-	@Override
-	public boolean validarData() {	// datas validas: somente ano de 2021
-		int ano = Integer.parseInt(this.data.split("/")[2]);
-		if (ano == 2021 || ano == 21) return true;
-		return false;
-	}
+	
+	/*
+	 * public boolean validarData() {
+	 * 
+	 * }
+	 */
 
 	public String getNome() {
 		return nome;
@@ -55,11 +60,11 @@ public class Evento implements Validador, Serializable, Comparable<Evento> {
 		this.taxaInscricao = taxaInscricao;
 	}
 
-	public String getData() {
+	public LocalDateTime getData() {
 		return data;
 	}
 
-	public void setData(String data) {
+	public void setData(LocalDateTime data) {
 		this.data = data;
 	}
 

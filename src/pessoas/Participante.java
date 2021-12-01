@@ -1,6 +1,7 @@
 package pessoas;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 public class Participante extends Pessoa implements Serializable{
 
@@ -11,13 +12,15 @@ public class Participante extends Pessoa implements Serializable{
 	private String endereco;
 	private String telefone;
 	private String cpf;
-	private String email;
+//	@ElementCollection
+//	@CollectionTable(name = "emails_dos_participantes")
+	private ArrayList<String> email;
 	
 	public Participante(String nome) {
 		super(nome);
 	}
 
-	public Participante(String nome, String endereco, String telefone, String cpf, String email) {
+	public Participante(String nome, String endereco, String telefone, String cpf, ArrayList<String> email) {
 		super(nome);
 		this.endereco = endereco;
 		this.telefone = telefone;
@@ -49,11 +52,11 @@ public class Participante extends Pessoa implements Serializable{
 		this.cpf = cpf;
 	}
 
-	public String getEmail() {
+	public ArrayList<String> getEmail() {
 		return email;
 	}
 
-	public void setEmail(String email) {
+	public void setEmail(ArrayList<String> email) {
 		this.email = email;
 	}
 

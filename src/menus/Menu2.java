@@ -1,9 +1,12 @@
 package menus;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.TreeSet;
+
 import javax.swing.JOptionPane;
+
 import eventos.Evento;
 import eventos.Local;
 import pessoas.Participante;
@@ -47,7 +50,11 @@ public class Menu2 implements OperacoesConjunto<Evento>{
 		String nome = JOptionPane.showInputDialog("Insira o nome do evento:");
 		double taxaInscricao = Double.parseDouble(JOptionPane.showInputDialog("Valor da taxa de inscrição:"));
 		String data = JOptionPane.showInputDialog("Insira a data do evento (formato xx/xx/xxxx): ");
-
+		String[] arrayData = data.split("/");
+		String horarioDeInicio = JOptionPane.showInputDialog("Insira o horário de início do evento (formato HH:MM):");
+		String[] arrayHorario = horarioDeInicio.split("/");
+		LocalDateTime dataEHorario = LocalDateTime.of(Integer.parseInt(arrayData[2]), Integer.parseInt(arrayData[1]),
+				Integer.parseInt(arrayData[0]), Integer.parseInt(arrayHorario[0]), Integer.parseInt(arrayHorario[1]));
 
 
 		//		CADASTRO DE PARTICIPANTES DO EVENTO------------------------------------------------------
@@ -58,8 +65,15 @@ public class Menu2 implements OperacoesConjunto<Evento>{
 			String endereco = JOptionPane.showInputDialog(String.format("PARTICIPANTE %d\nEndereço:", i + 1));
 			String telefone = JOptionPane.showInputDialog(String.format("PARTICIPANTE %d\nTelefone:", i + 1));
 			String cpf = JOptionPane.showInputDialog(String.format("PARTICIPANTE %d\nCPF:", i + 1));
-			String email = JOptionPane.showInputDialog(String.format("PARTICIPANTE %d\nE-mail:", i + 1));
-			participantes.add(new Participante(nomeParticipante, endereco, telefone, cpf, email));
+			ArrayList<String> emailsDoParticipante = new ArrayList<String>();
+			
+			int quantEmailsParticipante = Integer.parseInt(JOptionPane.showInputDialog("Insira quantos e-mails serão informados para o participante %d:", i + 1));
+			for (int j = 0; j < quantEmailsParticipante; j++) {
+				String email = JOptionPane.showInputDialog(String.format("PARTICIPANTE %d\nE-mail %d:", i + 1, j + 1));
+				emailsDoParticipante.add(email);
+			}
+			
+			participantes.add(new Participante(nomeParticipante, endereco, telefone, cpf, emailsDoParticipante));
 		}
 		//		-------------------------------------------------------------------------------------------
 
@@ -93,7 +107,7 @@ public class Menu2 implements OperacoesConjunto<Evento>{
 
 
 
-		Evento eventoCriado = new Evento(nome, taxaInscricao, data, situacao, participantes, local);
+		Evento eventoCriado = new Evento(nome, taxaInscricao, dataEHorario, situacao, participantes, local);
 		Menu2.eventos.add(eventoCriado);
 
 	}
