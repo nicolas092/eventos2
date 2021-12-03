@@ -73,7 +73,7 @@ public class Menu2 implements OperacoesConjunto<Evento>{
 				emailsDoParticipante.add(email);
 			}
 			
-			participantes.add(new Participante(nomeParticipante, endereco, telefone, cpf, emailsDoParticipante));
+//			participantes.add(new Participante(nomeParticipante, endereco, telefone, cpf, emailsDoParticipante));
 		}
 		//		-------------------------------------------------------------------------------------------
 

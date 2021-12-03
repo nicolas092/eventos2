@@ -1,14 +1,25 @@
 package eventos;
 
-import java.io.Serializable;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
-public class Local implements Serializable{
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 3671014887864501250L;
+@Entity
+@Table(name = "locais")
+public class Local {
+	
+	@Id
+	@Column(name = "idLocal")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long identificador;
+	@Column(length = 50, nullable = false)
 	private String instituicao;
+	@Column(length = 14, nullable = false)
 	private String telefone;
+	@Column(length = 50, nullable = false)
 	private String organizador;
 	
 	public Local() {
@@ -22,6 +33,14 @@ public class Local implements Serializable{
 		this.organizador = organizador;
 	}
 	
+	public Long getIdentificador() {
+		return identificador;
+	}
+
+	public void setIdentificador(Long identificador) {
+		this.identificador = identificador;
+	}
+
 	public String getInstituicao() {
 		return instituicao;
 	}

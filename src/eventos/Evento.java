@@ -1,26 +1,45 @@
 package eventos;
 
-import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.List;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.Table;
 
 import pessoas.Participante;
 import util.Situacao;
 
-public class Evento implements Serializable, Comparable<Evento> {
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 5823077336776252082L;
+@Entity
+@Table(name = "eventos")
+public class Evento implements Comparable<Evento> {
+	
+	@Id
+	@Column(name = "idEvento")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long identificador;
+	@Column(length = 50, nullable = false)
 	private String nome;
+	@Column(nullable = false)
 	private double taxaInscricao;
-//	escolhi LocalDateTime pois o mais comum é que um evento tenha, além de dia específico,
-//	um horário definido para iniciar. Além disso, optei por usar o pacote java.time por ser uma solução mais recente
+	
+//	escolhi LocalDateTime pois o mais comum é que um evento tenha, além de dia
+//	específico, um horário definido para iniciar. Além disso, optei por usar o
+//	pacote java.time por ser uma solução mais recente
 	private LocalDateTime data;
-//	escolhi EnumType.ORDINAL porque entendo que mudar os valores da Enum ("ENCERRADO" para "FINALIZADO" por exemplo)
-//	pode ser interessante, mas não vejo porque mudar a ordem das constantes
-//	@Enumerated(EnumType.ORDINAL)
+	
+//	escolhi EnumType.ORDINAL porque entendo que mudar os valores da Enum
+//	("ENCERRADO" para "FINALIZADO" por exemplo) pode ser interessante, mas não
+//	vejo porque mudar a ordem das constantes
+	@Enumerated(EnumType.ORDINAL)
 	private Situacao situacao;
+	@ManyToMany()
 	private List<Participante> participantes;
 	private Local local;
 
@@ -44,9 +63,18 @@ public class Evento implements Serializable, Comparable<Evento> {
 	 * }
 	 */
 
+	public Long getIdentificador() {
+		return identificador;
+	}
+	
+	public void setIdentificador(Long identificador) {
+		this.identificador = identificador;
+	}
+	
 	public String getNome() {
 		return nome;
 	}
+
 
 	public void setNome(String nome) {
 		this.nome = nome;

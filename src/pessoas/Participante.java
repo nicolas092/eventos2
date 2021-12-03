@@ -1,31 +1,39 @@
 package pessoas;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Participante extends Pessoa implements Serializable{
+import javax.persistence.Column;
+import javax.persistence.DiscriminatorValue;
+import javax.persistence.Entity;
+import javax.persistence.PrimaryKeyJoinColumn;
+import javax.persistence.Table;
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -2521736816830815866L;
+@Entity
+@Table(name = "participantes")
+@PrimaryKeyJoinColumn(name = "idParticipante", referencedColumnName = "idPessoa")
+@DiscriminatorValue(value = "PAR")
+public class Participante extends Pessoa {
+
+	@Column(length = 200, nullable = false)
 	private String endereco;
+	@Column(length = 14, nullable = true)
 	private String telefone;
+	@Column(length = 11, nullable = false)
 	private String cpf;
 //	@ElementCollection
 //	@CollectionTable(name = "emails_dos_participantes")
-	private ArrayList<String> email;
+//	private ArrayList<String> emails;
 	
-	public Participante(String nome) {
-		super(nome);
+	public Participante() {
+		super();
 	}
 
-	public Participante(String nome, String endereco, String telefone, String cpf, ArrayList<String> email) {
+	public Participante(String nome, String endereco, String telefone, String cpf/* , ArrayList<String> emails */) {
 		super(nome);
 		this.endereco = endereco;
 		this.telefone = telefone;
 		this.cpf = cpf;
-		this.email = email;
+//		this.emails = emails;
 	}
 
 	public String getEndereco() {
@@ -52,13 +60,11 @@ public class Participante extends Pessoa implements Serializable{
 		this.cpf = cpf;
 	}
 
-	public ArrayList<String> getEmail() {
-		return email;
-	}
-
-	public void setEmail(ArrayList<String> email) {
-		this.email = email;
-	}
+	/*
+	 * public ArrayList<String> getEmail() { return emails; }
+	 * 
+	 * public void setEmail(ArrayList<String> emails) { this.emails = emails; }
+	 */
 
 	@Override
 	public String toString() {
@@ -66,7 +72,7 @@ public class Participante extends Pessoa implements Serializable{
 				", endereco = " + endereco +
 				", telefone = " + telefone +
 				", cpf = " + cpf +
-				", email = " + email;
+				", email = " /* + emails */;
 	}
 	
 }
