@@ -19,8 +19,8 @@
 				essa propriedade não é mais necessária value="com.mysql.cj.jdbc.Driver" /> -->
 			<property
 				name="javax.persistence.schema-generation.database.action"
-				value="create" />
-			<!-- <property name="eclipselink.logging.level" value="FINE" /> -->
+				value="drop-and-create" />
+			<!-- <property name="eclipselink.logging.level" value="FINER" /> -->
 		</properties>
 	</persistence-unit>
 </persistence>

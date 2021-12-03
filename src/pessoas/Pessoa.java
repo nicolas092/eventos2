@@ -1,9 +1,6 @@
 package pessoas;
 
 import javax.persistence.Column;
-import javax.persistence.DiscriminatorColumn;
-import javax.persistence.DiscriminatorType;
-import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -20,8 +17,6 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "pessoas")
 @Inheritance(strategy = InheritanceType.JOINED)
-@DiscriminatorColumn(name = "tipo", length = 3, discriminatorType = DiscriminatorType.STRING)
-@DiscriminatorValue(value = "PES")
 public class Pessoa {
 	
 	@Id

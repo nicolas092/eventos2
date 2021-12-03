@@ -3,7 +3,6 @@ package pessoas;
 import java.util.ArrayList;
 
 import javax.persistence.Column;
-import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
@@ -11,7 +10,6 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "participantes")
 @PrimaryKeyJoinColumn(name = "idParticipante", referencedColumnName = "idPessoa")
-@DiscriminatorValue(value = "PAR")
 public class Participante extends Pessoa {
 
 	@Column(length = 200, nullable = false)
