@@ -10,21 +10,21 @@ public class ParticipanteDAO extends DAO<Participante> {
 	}
 
 	public Participante pesquisarPeloNome(String nomeProcurado) {
-		List<Participante> locais = obterTodos();
-		for (Participante local : locais) {
-			if (local.getNome().equals(nomeProcurado))
-				return local;
+		List<Participante> participantes = obterTodos();
+		for (Participante participante : participantes) {
+			if (participante.getNome().toLowerCase().contains(nomeProcurado.toLowerCase()))
+				return participante;
 		}
 		return null;
 	}
 
-	public DAO<Participante> cadastrar(Participante entidade) {
+	public DAO<Participante> cadastrar(Participante participante) {
 		try {
 			em.getTransaction().begin();
-			em.persist(entidade);
+			em.persist(participante);
 			em.getTransaction().commit();
-			System.out.println("Cadastro de registro da classe " + classe.getName() + " inserido com sucesso Id: "
-					+ entidade.getIdentificador());
+			System.out.println("Registro da classe " + classe.getName() + " inserido com sucesso Id: "
+					+ participante.getIdentificador());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

@@ -10,19 +10,21 @@ public class PessoaDAO extends DAO<Pessoa> {
 	}
 
 	public Pessoa pesquisarPeloNome(String nomeProcurado) {
-		List<Pessoa> locais = obterTodos();
-		for (Pessoa local : locais) {
-			if (local.getNome().equals(nomeProcurado))
-				return local;
+		List<Pessoa> pessoas = obterTodos();
+		for (Pessoa pessoa : pessoas) {
+			if (pessoa.getNome().toLowerCase().contains(nomeProcurado.toLowerCase()))
+				return pessoa;
 		}
 		return null;
 	}
 
-	public DAO<Pessoa> cadastrar(Pessoa entidade) {
+	public DAO<Pessoa> cadastrar(Pessoa pessoa) {
 		try {
-			em.persist(entidade);
-			System.out.println("Cadastro de registro da classe " + classe.getName() + " inserido com sucesso Id: "
-					+ entidade.getIdentificador());
+			em.getTransaction().begin();
+			em.persist(pessoa);
+			em.getTransaction().commit();
+			System.out.println("Registro da classe " + classe.getName() + " inserido com sucesso Id: "
+					+ pessoa.getIdentificador());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

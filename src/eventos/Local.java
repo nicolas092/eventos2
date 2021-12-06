@@ -12,7 +12,7 @@ import javax.persistence.Table;
 public class Local {
 	
 	@Id
-	@Column(name = "idLocal")
+	@Column(name = "ID_LOCAL")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long identificador;
 	@Column(length = 50, nullable = false)
@@ -67,7 +67,7 @@ public class Local {
 
 	@Override
 	public String toString() {
-		return	"\ninstituição = " + instituicao +
+		return	"instituição = " + instituicao +
 				", telefone = " + telefone +
 				", organizador = " + organizador;
 	}

@@ -13,17 +13,19 @@ public class EventoDAO extends DAO<Evento> {
 	public Evento pesquisarPeloNome(String nomeProcurado) {
 		List<Evento> eventos = obterTodos();
 		for (Evento evento : eventos) {
-			if (evento.getNome().equals(nomeProcurado))
+			if (evento.getNome().toLowerCase().contains(nomeProcurado.toLowerCase()))
 				return evento;
 		}
 		return null;
 	}
 
-	public DAO<Evento> cadastrar(Evento entidade) {
+	public DAO<Evento> cadastrar(Evento evento) {
 		try {
-			em.persist(entidade);
-			System.out.println("Cadastro de registro da classe " + classe.getName() + " inserido com sucesso Id: "
-					+ entidade.getIdentificador());
+			em.getTransaction().begin();
+			em.persist(evento);
+			em.getTransaction().commit();
+			System.out.println("Registro da classe " + classe.getName() + " inserido com sucesso Id: "
+					+ evento.getIdentificador());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

@@ -21,7 +21,7 @@ import util.Situacao;
 public class Evento implements Comparable<Evento> {
 	
 	@Id
-	@Column(name = "idEvento")
+	@Column(name = "ID_EVENTO")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long identificador;
 	@Column(length = 50, nullable = false)
@@ -29,14 +29,14 @@ public class Evento implements Comparable<Evento> {
 	@Column(nullable = false)
 	private double taxaInscricao;
 	
-//	escolhi LocalDateTime pois o mais comum é que um evento tenha, além de dia
+//	escolhi LocalDateTime pois o mais comum é que um evento tenha também, além de dia
 //	específico, um horário definido para iniciar. Além disso, optei por usar o
 //	pacote java.time por ser uma solução mais recente
 	private LocalDateTime data;
 	
-//	escolhi EnumType.ORDINAL porque entendo que mudar os valores da Enum
-//	("ENCERRADO" para "FINALIZADO" por exemplo) pode ser interessante, mas não
-//	vejo porque mudar a ordem das constantes
+//	escolhi EnumType.ORDINAL porque entendo que a necessidade de mudar os valores da Enum
+//	("ENCERRADO" para "FINALIZADO" por exemplo) tende a ser mais recorrente
+//	do que mudar a ordem das constantes
 	@Enumerated(EnumType.ORDINAL)
 	private Situacao situacao;
 	@ManyToMany()

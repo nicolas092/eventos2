@@ -13,17 +13,19 @@ public class LocalDAO extends DAO<Local> {
 	public Local pesquisarPeloNome(String nomeProcurado) {
 		List<Local> locais = obterTodos();
 		for (Local local : locais) {
-			if (local.getInstituicao().equals(nomeProcurado))
+			if (local.getInstituicao().toLowerCase().contains(nomeProcurado.toLowerCase()))
 				return local;
 		}
 		return null;
 	}
-	
-	public DAO<Local> cadastrar(Local entidade) {
+
+	public DAO<Local> cadastrar(Local local) {
 		try {
-			em.persist(entidade);
-			System.out.println("Cadastro de registro da classe " + classe.getName() + " inserido com sucesso Id: "
-					+ entidade.getIdentificador());
+			em.getTransaction().begin();
+			em.persist(local);
+			em.getTransaction().commit();
+			System.out.println("Registro da classe " + classe.getName() + " inserido com sucesso Id: "
+					+ local.getIdentificador());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

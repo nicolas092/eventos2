@@ -37,19 +37,24 @@ public class DAO<E> {
 
 	public DAO<E> excluir(Long identificador) {
 		try {
+			em.getTransaction().begin();
 			em.remove(em.find(classe, identificador));
-			System.out
-					.println("Registro " + identificador + " da classe " + classe.getName() + " excluído com sucesso");
+			em.getTransaction().commit();
+			System.out.println("Registro da classe " + classe.getName() + " removido com sucesso Id: "
+					+ identificador);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return this;
 	}
 
-	public DAO<E> atualizar(E entidade) {
+	public DAO<E> atualizar(E entidade, Long identificador) {
 		try {
+			em.getTransaction().begin();
 			em.merge(entidade);
-			System.out.println("Registro da classe " + classe.getName() + " atualizado com sucesso");
+			em.getTransaction().commit();
+			System.out.println("Registro da classe " + classe.getName() + " atualizado com sucesso Id: "
+					+ identificador);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
