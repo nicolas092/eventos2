@@ -19,7 +19,7 @@ public class LocalDAO extends DAO<Local> {
 		return null;
 	}
 
-	public DAO<Local> cadastrar(Local local) {
+	public LocalDAO cadastrar(Local local) {
 		try {
 			em.getTransaction().begin();
 			em.persist(local);

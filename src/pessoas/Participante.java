@@ -1,7 +1,5 @@
 package pessoas;
 
-import java.util.ArrayList;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.PrimaryKeyJoinColumn;
@@ -9,7 +7,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "participantes")
-@PrimaryKeyJoinColumn(name = "ID_PARTICIPANTE", referencedColumnName = "ID_PESSOA")
+@PrimaryKeyJoinColumn(name = "ID_PARTICIPANTE", referencedColumnName = "ID_PESSOA") // referente a estretegia de heranca
 public class Participante extends Pessoa {
 
 	@Column(length = 200, nullable = false)
@@ -18,20 +16,20 @@ public class Participante extends Pessoa {
 	private String telefone;
 	@Column(length = 11, nullable = false)
 	private String cpf;
+
 //	@ElementCollection
 //	@CollectionTable(name = "emails_dos_participantes")
-//	private ArrayList<String> emails;
-	
+//	private ArrayList<String> emails = new ArrayList<>();
+
 	public Participante() {
 		super();
 	}
 
-	public Participante(String nome, String endereco, String telefone, String cpf/* , ArrayList<String> emails */) {
+	public Participante(String nome, String endereco, String telefone, String cpf) {
 		super(nome);
 		this.endereco = endereco;
 		this.telefone = telefone;
 		this.cpf = cpf;
-//		this.emails = emails;
 	}
 
 	public String getEndereco() {
@@ -66,11 +64,8 @@ public class Participante extends Pessoa {
 
 	@Override
 	public String toString() {
-		return "nome = " + this.getNome() +
-				", endereco = " + endereco +
-				", telefone = " + telefone +
-				", cpf = " + cpf +
-				", email = " /* + emails */;
+		return "nome = " + this.getNome() + ", endereco = " + endereco + ", telefone = " + telefone + ", cpf = " + cpf
+				+ ", email = " /* + emails */ ;
 	}
-	
+
 }

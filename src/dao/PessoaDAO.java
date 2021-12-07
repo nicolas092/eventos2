@@ -18,7 +18,7 @@ public class PessoaDAO extends DAO<Pessoa> {
 		return null;
 	}
 
-	public DAO<Pessoa> cadastrar(Pessoa pessoa) {
+	public PessoaDAO cadastrar(Pessoa pessoa) {
 		try {
 			em.getTransaction().begin();
 			em.persist(pessoa);

@@ -18,7 +18,7 @@ public class ParticipanteDAO extends DAO<Participante> {
 		return null;
 	}
 
-	public DAO<Participante> cadastrar(Participante participante) {
+	public ParticipanteDAO cadastrar(Participante participante) {
 		try {
 			em.getTransaction().begin();
 			em.persist(participante);

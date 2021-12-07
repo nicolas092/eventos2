@@ -9,7 +9,7 @@ import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.Table;
 
-// ESTRATÉGIA DE HERANÇA: embora eu entenda que a melhor escolha pode variar em cada caso, acredito que JOINED tende a ser 
+// ESTRATÉGIA DE HERANÇA: embora eu entenda que a melhor escolha pode variar em cada caso, acredito que JOINED tende a ser
 // o mais interessante. Apesar de ser menos performático, essa estratégia não vai gerar uma tabela enorme com vários
 // campos nulos como é no SINGLE_TABLE e nem gerar colunas duplicadas em diferents tabelas como é no TABLE_PER_CLASS.
 // Além disso, o fato de que esse modelo de criação de tabelas no banco de dados ser o que mais se aproxima do paradigma OO

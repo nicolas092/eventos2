@@ -78,12 +78,14 @@ public class DAO<E> {
 		return query.getResultList();
 	}
 
-	public void fecharEntityManager() {
+	public DAO<E> fecharEntityManager() {
 		em.close();
+		return this;
 	}
 
-	public void fecharEntityManagerFactory() {
+	public DAO<E> fecharEntityManagerFactory() {
 		emf.close();
+		return this;
 	}
 
 }

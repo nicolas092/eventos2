@@ -19,7 +19,7 @@ public class EventoDAO extends DAO<Evento> {
 		return null;
 	}
 
-	public DAO<Evento> cadastrar(Evento evento) {
+	public EventoDAO cadastrar(Evento evento) {
 		try {
 			em.getTransaction().begin();
 			em.persist(evento);
