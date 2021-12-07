@@ -1,16 +1,21 @@
 package eventos;
 
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.OneToMany;
 
 @Entity
-@Table(name = "locais")
-public class Local {
+public class Local implements Serializable {
 
+	private static final long serialVersionUID = 1L;
 	@Id
 	@Column(name = "ID_LOCAL")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,6 +27,9 @@ public class Local {
 	@Column(length = 50, nullable = false)
 	private String organizador;
 
+	@OneToMany(mappedBy = "local", cascade = CascadeType.PERSIST)
+	private List<Evento> eventos = new ArrayList<>();
+
 	public Local() {
 		super();
 	}
@@ -31,6 +39,14 @@ public class Local {
 		this.instituicao = instituicao;
 		this.telefone = telefone;
 		this.organizador = organizador;
+	}
+	
+	public Local(String instituicao, String telefone, String organizador, List<Evento> eventos) {
+		super();
+		this.instituicao = instituicao;
+		this.telefone = telefone;
+		this.organizador = organizador;
+		this.setEventos(eventos);
 	}
 
 	public Long getIdentificador() {
@@ -65,19 +81,17 @@ public class Local {
 		this.organizador = organizador;
 	}
 
+	public List<Evento> getEventos() {
+		return eventos;
+	}
+
+	public void setEventos(List<Evento> eventos) {
+		this.eventos = eventos;
+	}
+
 	@Override
 	public String toString() {
-		return	"instituição = " + instituicao +
-				", telefone = " + telefone +
-				", organizador = " + organizador;
+		return "instituição = " + instituicao + ", telefone = " + telefone + ", organizador = " + organizador;
 	}
 
 }
-
-
-
-
-
-
-
-

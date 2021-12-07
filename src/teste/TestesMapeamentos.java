@@ -1,6 +1,8 @@
 package teste;
 
 import java.time.LocalDateTime;
+import java.util.Arrays;
+import java.util.List;
 
 import dao.EventoDAO;
 import dao.LocalDAO;
@@ -36,12 +38,13 @@ public class TestesMapeamentos {
 //		PARTICIPANTEDAO
 		System.out.println("--------------------------------------------");
 		ParticipanteDAO participantedao = new ParticipanteDAO();
-		Participante participante1 = new Participante("Nícolas", "av. Liberdade", "51986559754", "04836108012");
-		Participante participante2 = new Participante("Silvia", "av. Liberdade", "51986559754", "04836108012");
-		Participante participante3 = new Participante("Fabio", "av. Liberdade", "51986559754", "04836108012");
-		Participante participante4 = new Participante("Alex", "av. Liberdade", "51986559754", "04836108012");
-		Participante participante5 = new Participante("Karen", "av. Liberdade", "51986559754", "04836108012");
-		Participante participante6 = new Participante("Tanisi", "av. Liberdade", "51986559754", "04836108012");
+		List<String> emails = Arrays.asList("meuemail@hotmail.com", "meuemail@gmail.com");
+		Participante participante1 = new Participante("Nícolas", "av. Liberdade", "51986559754", "04836108012", emails);
+		Participante participante2 = new Participante("Silvia", "av. Liberdade", "51986559754", "04836108012", emails);
+		Participante participante3 = new Participante("Fabio", "av. Liberdade", "51986559754", "04836108012", emails);
+		Participante participante4 = new Participante("Alex", "av. Liberdade", "51986559754", "04836108012", emails);
+		Participante participante5 = new Participante("Karen", "av. Liberdade", "51986559754", "04836108012", emails);
+		Participante participante6 = new Participante("Tanisi", "av. Liberdade", "51986559754", "04836108012", emails);
 		participantedao.cadastrar(participante1).cadastrar(participante2).cadastrar(participante3)
 				.cadastrar(participante4).cadastrar(participante5).cadastrar(participante6);
 
@@ -72,7 +75,7 @@ public class TestesMapeamentos {
 		System.out.println("Pesquisa pelo id 2:\n" + localdao.pesquisarPelaChavePrimaria(2L));
 		System.out.println("Pesquisa pelo nome \"sesi\":\n" + localdao.pesquisarPeloNome("sesi"));
 
-		System.out.println("Lista de todas os eventos cadastrados:");
+		System.out.println("Lista de todas os locais cadastrados:");
 		localdao.obterTodos().forEach(System.out::println);
 
 		localdao.excluir(local2.getIdentificador());
@@ -83,16 +86,15 @@ public class TestesMapeamentos {
 		System.out.println("--------------------------------------------");
 		EventoDAO eventodao = new EventoDAO();
 		Evento evento1 = new Evento("Aniversário", 15.5, LocalDateTime.of(2021, 12, 19, 0, 0), Situacao.ANDAMENTO,
-				local1);
-		evento1.getParticipantes().add(participante2);
-		evento1.getParticipantes().add(participante3);
-		Evento evento2 = new Evento("Recuperação", 25, LocalDateTime.of(2021, 12, 1, 0, 0), Situacao.ENCERRADO, local3);
-		evento2.getParticipantes().add(participante3);
-		evento2.getParticipantes().add(participante5);
-		evento2.getParticipantes().add(participante6);
-		Evento evento3 = new Evento("Apenas um evento de teste", 25, LocalDateTime.of(2021, 12, 1, 0, 0),
-				Situacao.ENCERRADO, local3);
+				Arrays.asList(participante2, participante3, participante4), local1);
+		Evento evento2 = new Evento("Recuperação", 25, LocalDateTime.of(2021, 12, 1, 0, 0), Situacao.ENCERRADO,
+				Arrays.asList(participante4, participante5, participante6), local3);
+		Evento evento3 = new Evento("Evento teste", 25, LocalDateTime.of(2020, 12, 1, 0, 0), Situacao.ENCERRADO);
 		eventodao.cadastrar(evento1).cadastrar(evento2).cadastrar(evento3);
+
+		System.out.println("Evento 1 tem data válida (2021)? " + evento1.getData() + " " + evento1.validarData());
+		System.out.println("Evento 2 tem data válida (2021)? " + evento2.getData() + " " + evento2.validarData());
+		System.out.println("Evento 3 tem data válida (2021)? " + evento3.getData() + " " + evento3.validarData());
 
 		evento2.setNome("Formatura");
 		eventodao.atualizar(evento2, evento2.getIdentificador());
@@ -106,6 +108,5 @@ public class TestesMapeamentos {
 		eventodao.excluir(evento3.getIdentificador());
 
 		eventodao.fecharEntityManager().fecharEntityManagerFactory();
-
 	}
 }

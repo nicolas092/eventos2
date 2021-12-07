@@ -1,5 +1,6 @@
 package eventos;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -12,19 +13,16 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
 
 import pessoas.Participante;
 import util.Situacao;
 
 @Entity
-@Table(name = "eventos")
-public class Evento {
+public class Evento implements Serializable {
 
+	private static final long serialVersionUID = 1L;
 	@Id
 	@Column(name = "ID_EVENTO")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -45,32 +43,42 @@ public class Evento {
 	@Enumerated(EnumType.ORDINAL)
 	private Situacao situacao;
 
-	@OneToMany
-	@JoinTable(name = "evento_participantes", joinColumns = @JoinColumn(name = "ID_EVENTO", referencedColumnName = "ID_EVENTO"), inverseJoinColumns = @JoinColumn(name = "ID_PARTICIPANTE", referencedColumnName = "ID_PARTICIPANTE"))
+	@OneToMany // (cascade = CascadeType.PERSIST) comentado pois os registros já foram
+				// inseridos manualmente
 	private List<Participante> participantes = new ArrayList<>();
 
-	@OneToOne /* (cascade = CascadeType.PERSIST) deixei comentado porque insere duas vezes se eu já tiver inserido manualmente */
-	@JoinColumn(name = "ID_LOCAL")
+	@ManyToOne(cascade = CascadeType.PERSIST)
 	private Local local;
 
 	public Evento() {
 		super();
 	}
 
-	public Evento(String nome, double taxaInscricao, LocalDateTime data, Situacao situacao, Local local) {
+	public Evento(String nome, double taxaInscricao, LocalDateTime data, Situacao situacao) {
 		super();
 		this.nome = nome;
 		this.taxaInscricao = taxaInscricao;
 		this.data = data;
 		this.situacao = situacao;
+	}
+
+	public Evento(String nome, double taxaInscricao, LocalDateTime data, Situacao situacao,
+			List<Participante> participantes, Local local) {
+		super();
+		this.nome = nome;
+		this.taxaInscricao = taxaInscricao;
+		this.data = data;
+		this.situacao = situacao;
+		this.participantes = participantes;
 		this.local = local;
 	}
 
-	/*
-	 * public boolean validarData() {
-	 *
-	 * }
-	 */
+	public boolean validarData() {
+		if (this.data.getYear() == 2021)
+			return true;
+		else
+			return false;
+	}
 
 	public Long getIdentificador() {
 		return identificador;
@@ -131,18 +139,18 @@ public class Evento {
 	@Override
 	public String toString() {
 		String auxParticipantes = "";
-		if (participantes != null) { // participantes nunca sera nulo
+		if (participantes != null) {
 			for (Participante participante : participantes) {
 				if (participante != null)
-					auxParticipantes += participante.toString() + "\n"; // embora listas possam ter valores nulos,
-			} // participante nunca sera nulo
+					auxParticipantes += participante.toString() + "\n";
+			}
 		}
 
 		String auxLocal = "";
 		if (local != null)
 			auxLocal += local.toString();
 		else
-			auxLocal += "local não informado";
+			auxLocal += " local não informado";
 
 		return "EVENTO" + "\nnome = " + nome + ", taxaInscricao = R$" + taxaInscricao + ", data = " + data
 				+ ", situacao = " + situacao + "\nLocal" + auxLocal + "\nParticipantes\n"
