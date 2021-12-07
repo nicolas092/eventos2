@@ -1,28 +1,39 @@
 package pessoas;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
-public class Participante extends Pessoa implements Serializable{
+import javax.persistence.Column;
+import javax.persistence.ElementCollection;
+import javax.persistence.Entity;
+import javax.persistence.PrimaryKeyJoinColumn;
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -2521736816830815866L;
+@Entity
+@PrimaryKeyJoinColumn(name = "ID_PARTICIPANTE", referencedColumnName = "ID_PESSOA") // referente a estretegia de heranca
+public class Participante extends Pessoa implements Serializable {
+
+	private static final long serialVersionUID = 1L;
+	@Column(length = 200, nullable = false)
 	private String endereco;
+	@Column(length = 14, nullable = true)
 	private String telefone;
+	@Column(length = 11, nullable = false)
 	private String cpf;
-	private String email;
-	
-	public Participante(String nome) {
-		super(nome);
+
+	@ElementCollection
+	private List<String> emails = new ArrayList<>();
+
+	public Participante() {
+		super();
 	}
 
-	public Participante(String nome, String endereco, String telefone, String cpf, String email) {
+	public Participante(String nome, String endereco, String telefone, String cpf, List<String> emails) {
 		super(nome);
 		this.endereco = endereco;
 		this.telefone = telefone;
 		this.cpf = cpf;
-		this.email = email;
+		this.emails = emails;
 	}
 
 	public String getEndereco() {
@@ -49,21 +60,18 @@ public class Participante extends Pessoa implements Serializable{
 		this.cpf = cpf;
 	}
 
-	public String getEmail() {
-		return email;
+	public List<String> getEmails() {
+		return emails;
 	}
 
-	public void setEmail(String email) {
-		this.email = email;
+	public void setEmails(List<String> emails) {
+		this.emails = emails;
 	}
 
 	@Override
 	public String toString() {
-		return "nome = " + this.getNome() +
-				", endereco = " + endereco +
-				", telefone = " + telefone +
-				", cpf = " + cpf +
-				", email = " + email;
+		return "nome = " + this.getNome() + ", endereco = " + endereco + ", telefone = " + telefone + ", cpf = " + cpf
+				+ ", email = " + emails;
 	}
-	
+
 }

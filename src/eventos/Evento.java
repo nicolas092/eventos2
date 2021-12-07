@@ -1,28 +1,69 @@
 package eventos;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+
 import pessoas.Participante;
 import util.Situacao;
-import util.Validador;
 
-public class Evento implements Validador, Serializable, Comparable<Evento> {
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 5823077336776252082L;
+@Entity
+public class Evento implements Serializable {
+
+	private static final long serialVersionUID = 1L;
+	@Id
+	@Column(name = "ID_EVENTO")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long identificador;
+	@Column(length = 50, nullable = false)
 	private String nome;
+	@Column(nullable = false)
 	private double taxaInscricao;
-	private String data;
+
+//	escolhi LocalDateTime pois o mais comum é que um evento tenha também, além de dia
+//	específico, um horário definido para iniciar. Além disso, optei por usar o
+//	pacote java.time por ser uma solução mais recente
+	private LocalDateTime data;
+
+//	escolhi EnumType.ORDINAL porque entendo que a necessidade de mudar os valores da Enum
+//	("ENCERRADO" para "FINALIZADO" por exemplo) tende a ser mais recorrente
+//	do que mudar a ordem das constantes
+	@Enumerated(EnumType.ORDINAL)
 	private Situacao situacao;
-	private List<Participante> participantes;
+
+	@OneToMany // (cascade = CascadeType.PERSIST) comentado pois os registros já foram
+				// inseridos manualmente
+	private List<Participante> participantes = new ArrayList<>();
+
+	@ManyToOne(cascade = CascadeType.PERSIST)
 	private Local local;
 
 	public Evento() {
 		super();
 	}
 
-	public Evento(String nome, double taxaInscricao, String data, Situacao situacao, List<Participante> participantes, Local local) {
+	public Evento(String nome, double taxaInscricao, LocalDateTime data, Situacao situacao) {
+		super();
+		this.nome = nome;
+		this.taxaInscricao = taxaInscricao;
+		this.data = data;
+		this.situacao = situacao;
+	}
+
+	public Evento(String nome, double taxaInscricao, LocalDateTime data, Situacao situacao,
+			List<Participante> participantes, Local local) {
 		super();
 		this.nome = nome;
 		this.taxaInscricao = taxaInscricao;
@@ -32,11 +73,19 @@ public class Evento implements Validador, Serializable, Comparable<Evento> {
 		this.local = local;
 	}
 
-	@Override
-	public boolean validarData() {	// datas validas: somente ano de 2021
-		int ano = Integer.parseInt(this.data.split("/")[2]);
-		if (ano == 2021 || ano == 21) return true;
-		return false;
+	public boolean validarData() {
+		if (this.data.getYear() == 2021)
+			return true;
+		else
+			return false;
+	}
+
+	public Long getIdentificador() {
+		return identificador;
+	}
+
+	public void setIdentificador(Long identificador) {
+		this.identificador = identificador;
 	}
 
 	public String getNome() {
@@ -55,11 +104,11 @@ public class Evento implements Validador, Serializable, Comparable<Evento> {
 		this.taxaInscricao = taxaInscricao;
 	}
 
-	public String getData() {
+	public LocalDateTime getData() {
 		return data;
 	}
 
-	public void setData(String data) {
+	public void setData(LocalDateTime data) {
 		this.data = data;
 	}
 
@@ -90,33 +139,22 @@ public class Evento implements Validador, Serializable, Comparable<Evento> {
 	@Override
 	public String toString() {
 		String auxParticipantes = "";
-		if(participantes != null) {																// participantes nunca sera nulo
-			for(Participante participante : participantes) {
-				if(participante != null) auxParticipantes += participante.toString() + "\n";	// embora listas possam ter valores nulos,
-			}																					// participante nunca sera nulo
+		if (participantes != null) {
+			for (Participante participante : participantes) {
+				if (participante != null)
+					auxParticipantes += participante.toString() + "\n";
+			}
 		}
 
 		String auxLocal = "";
-		if(local != null) auxLocal += local.toString(); 
-		else auxLocal += "local não informado";
+		if (local != null)
+			auxLocal += local.toString();
+		else
+			auxLocal += " local não informado";
 
-		return "EVENTO" +
-		"\nnome = " + nome +
-		", taxaInscricao = R$" + taxaInscricao +
-		", data = " + data +
-		", situacao = " + situacao +
-		"\nLocal" + auxLocal +
-		"\nParticipantes\n" + (auxParticipantes.equals("") ? "nenhum participante informado\n" : auxParticipantes);
+		return "EVENTO" + "\nnome = " + nome + ", taxaInscricao = R$" + taxaInscricao + ", data = " + data
+				+ ", situacao = " + situacao + "\nLocal" + auxLocal + "\nParticipantes\n"
+				+ (auxParticipantes.equals("") ? "nenhum participante informado\n" : auxParticipantes);
 	}
-
-
-
-	@Override
-	public int compareTo(Evento o) {
-		return nome.compareToIgnoreCase(o.getNome());
-	}
-
-
 
 }
-
