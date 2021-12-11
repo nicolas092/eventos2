@@ -14,7 +14,7 @@
 				value="jdbc:mysql://localhost:3306/testesjpa" />
 			<property name="javax.persistence.jdbc.user" value="root" />
 			<property name="javax.persistence.jdbc.password"
-				value="K24ri2LM@" />
+				value="" />
 			<!-- <property name="javax.persistence.jdbc.driver" console avisa que 
 				essa propriedade não é mais necessária value="com.mysql.cj.jdbc.Driver" /> -->
 			<property
